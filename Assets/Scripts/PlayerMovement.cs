@@ -18,6 +18,13 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!IsOwner) return;
+
+
+    }
+
+    public void Move()
+    {
+
     }
 }
