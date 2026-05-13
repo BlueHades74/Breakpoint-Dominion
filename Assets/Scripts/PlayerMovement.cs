@@ -11,7 +11,17 @@ public class PlayerMovement : NetworkBehaviour
 
     private Vector2 moveInput;
     private Vector3 move;
-    private bool isGrounded = true;
+    [SerializeField] private bool isGrounded = true;
+
+    private void OnEnable()
+    {
+        PlayerGroundedCheck.onTouchingGround += GroundedTrue;
+    }
+
+    private void OnDisable()
+    {
+        PlayerGroundedCheck.onTouchingGround -= GroundedTrue;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,15 +67,15 @@ public class PlayerMovement : NetworkBehaviour
 
         if (isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            var moveY = rb.linearVelocity;
+            moveY.y = jumpPower;
+            rb.linearVelocity = moveY;
             isGrounded = false;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void GroundedTrue()
     {
-        if (!isGrounded) return;
-
-        if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
+        isGrounded = true;
     }
 }
