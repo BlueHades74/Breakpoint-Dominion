@@ -29,9 +29,8 @@ public class PlayerMovement : NetworkBehaviour
         if (IsOwner)
         {
             GetComponent<Renderer>().material.color = Color.blue;
+            rb = GetComponent<Rigidbody>();
         }
-
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
