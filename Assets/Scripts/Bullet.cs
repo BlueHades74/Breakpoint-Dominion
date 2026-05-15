@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            // destroy bullet
+            // destroy/ deal damage to enemy
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            // probably going to need to call an action
+            // for performant shoot to listen for
+        }
     }
 }

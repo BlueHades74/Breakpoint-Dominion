@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 6105246998617974010}
   - component: {fileID: 1910559505015556714}
   - component: {fileID: 8153599998063215482}
+  - component: {fileID: 5328079572162636817}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2087357125
+  GlobalObjectIdHash: 1814748857
   InScenePlacedSourceGlobalObjectIdHash: 1814748857
   DeferredDespawnTick: 0
   Ownership: 1
@@ -438,12 +439,24 @@ MonoBehaviour:
     m_ActionId: b8f0b194-0301-4f65-a8e9-8a2f9a9eb680
     m_ActionName: 'Movement/Jump[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5328079572162636817}
+        m_TargetAssemblyTypeName: PerformantShoot, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1799c440-b015-4089-bc1d-aaf945a6af63
     m_ActionName: 'Player Inputs/Fire[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Player Inputs
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &-1273354026811673837
@@ -554,6 +567,24 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &5328079572162636817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547216352733348984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec80cfec8eb98ed4f91eda6d67722e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerformantShoot
+  ShowTopMostFoldoutHeaderGroup: 1
+  bulletPrefab: {fileID: 692707566513818331, guid: 8e62900fcfd27964fbcf86f1d96f3085, type: 3}
+  bulletSpeed: 12
+  startingPoint: {fileID: 8327915110575991502}
+  lifeTimer: 5
+  poolSize: 100
 --- !u!1 &3712685768537847297
 GameObject:
   m_ObjectHideFlags: 0

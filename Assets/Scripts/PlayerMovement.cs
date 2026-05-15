@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -112,11 +111,15 @@ public class PlayerMovement : NetworkBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
+
         lookInput = context.ReadValue<Vector2>();
     }
 
     private void GroundedTrue()
     {
+        if (!IsOwner) return;
+
         isGrounded = true;
     }
 }
