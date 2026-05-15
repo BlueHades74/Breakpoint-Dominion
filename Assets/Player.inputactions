@@ -3,7 +3,7 @@
     "name": "Player",
     "maps": [
         {
-            "name": "Movement",
+            "name": "Player Inputs",
             "id": "173c2d3e-ead5-41bc-9ea0-f23ec089b76a",
             "actions": [
                 {
@@ -28,6 +28,15 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "b8f0b194-0301-4f65-a8e9-8a2f9a9eb680",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "1799c440-b015-4089-bc1d-aaf945a6af63",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -142,6 +151,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb3cf2c0-0ddf-4c51-9182-7fa63c64e799",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e6bc4a4-7f2b-47fd-8ba6-96366e4abc85",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
