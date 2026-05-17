@@ -12,11 +12,13 @@ public class NetworkManagerUI : MonoBehaviour
         hostBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
+            Cursor.lockState = CursorLockMode.Locked;
         });
 
         clientBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
+            Cursor.lockState = CursorLockMode.Locked;
         });
     }
 }

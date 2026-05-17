@@ -1,7 +1,9 @@
-using UnityEngine;
-using Unity.Netcode;
-using UnityEngine.InputSystem;
+using System;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PerformantShoot : NetworkBehaviour
 {
@@ -24,15 +26,14 @@ public class PerformantShoot : NetworkBehaviour
 
             bulletObj.SetActive(false);
 
-            PerformantBullet bullet = new PerformantBullet
-            {
-                bulletObject = bulletObj,
-                bulletTransform = bulletObj.transform,
-                bulletDirection = Vector3.zero,
-                bulletPosition = Vector3.zero,
-                lifeTime = lifeTimer,
-                active = false
-            };
+            PerformantBullet bullet = bulletObj.GetComponent<PerformantBullet>();
+
+            bullet.bulletDirection = Vector3.zero;
+            bullet.bulletPosition = Vector3.zero;
+            bullet.lifeTime = lifeTimer;
+            bullet.active = false;
+
+            bullet.SetTransform();
 
             poolBullets.Add(bullet);
         }
@@ -116,6 +117,8 @@ public class PerformantShoot : NetworkBehaviour
         // it will adjust where whatever it is is facing
         bullet.bulletObject.transform.rotation = Quaternion.LookRotation(direction);
 
+        bullet.rb.linearVelocity = bullet.bulletDirection * bulletSpeed;
+
         activeBullets.Add(bullet);
     }
 
@@ -131,27 +134,18 @@ public class PerformantShoot : NetworkBehaviour
     [ServerRpc]
     private void SpawnBulletServerRpc(Vector3 startPoint, Vector3 direction)
     {
+        // spawn bullet for host/server
         SpawnBulletLocal(startPoint, direction);
-
+        // tell clients to spawn bullet too
         SpawnBulletClientRpc(startPoint, direction);
     }
 
     [ClientRpc]
     private void SpawnBulletClientRpc(Vector3 startPoint, Vector3 direction)
     {
+        // don't spawn bullet if you are client that originally spawn it
         if (IsOwner) return;
-
+        // spawn bullet on clients
         SpawnBulletLocal(startPoint, direction);
-    }
-
-    // small class just for additional bullet info
-    private class PerformantBullet
-    {
-        public Transform bulletTransform;
-        public Vector3 bulletPosition;
-        public Vector3 bulletDirection;
-        public float lifeTime;
-        public GameObject bulletObject;
-        public bool active;
     }
 }
