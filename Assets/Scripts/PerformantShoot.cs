@@ -87,8 +87,6 @@ public class PerformantShoot : NetworkBehaviour
         // could just do transform.forward later, but this is
         // just in case I want to add more dynamic direction later
         Vector3 direction = transform.forward;
-        // spawn for client
-        SpawnBulletLocal(startingPoint.position, direction);
         // spawn for server to update
         SpawnBulletServerRpc(startingPoint.position, direction);
     }
@@ -135,7 +133,7 @@ public class PerformantShoot : NetworkBehaviour
     private void SpawnBulletServerRpc(Vector3 startPoint, Vector3 direction)
     {
         // spawn bullet for host/server
-        SpawnBulletLocal(startPoint, direction);
+        //SpawnBulletLocal(startPoint, direction);
         // tell clients to spawn bullet too
         SpawnBulletClientRpc(startPoint, direction);
     }
@@ -143,8 +141,6 @@ public class PerformantShoot : NetworkBehaviour
     [ClientRpc]
     private void SpawnBulletClientRpc(Vector3 startPoint, Vector3 direction)
     {
-        // don't spawn bullet if you are client that originally spawn it
-        if (IsOwner) return;
         // spawn bullet on clients
         SpawnBulletLocal(startPoint, direction);
     }
