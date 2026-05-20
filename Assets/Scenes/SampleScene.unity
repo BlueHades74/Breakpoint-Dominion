@@ -2389,6 +2389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManagerUI
   hostBtn: {fileID: 1400889683}
   clientBtn: {fileID: 1767024508}
+  canvas: {fileID: 651904425}
 --- !u!1 &1755833677
 GameObject:
   m_ObjectHideFlags: 0

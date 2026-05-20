@@ -9,7 +9,7 @@ public class TowerCaptureZone : NetworkBehaviour
     private NetworkVariable<int> capPercentage = new(0);
     private Coroutine captureRoutine;
 
-    [SerializeField] private Material towerMat;
+    [SerializeField] private Renderer rend;
     
     public override void OnNetworkSpawn()
     {
@@ -18,7 +18,8 @@ public class TowerCaptureZone : NetworkBehaviour
 
     private void Start()
     {
-        towerMat.color = Color.grey;
+        // set the local tower color grey
+        rend.material.color = Color.grey;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,7 +53,8 @@ public class TowerCaptureZone : NetworkBehaviour
     [ClientRpc]
     private void ChangeColorClientRpc()
     {
-        towerMat.color = Color.blueViolet;
+        // server sends out message to set local tower color
+        rend.material.color = Color.blueViolet;
     }
 
     private IEnumerator CaptureTower()
@@ -60,7 +62,6 @@ public class TowerCaptureZone : NetworkBehaviour
         while (capPercentage.Value < 100)
         {
             capPercentage.Value += 5;
-            //Debug.Log($"Capture Percentage: {capPercentage.Value}");
 
             if (capPercentage.Value >= 100) ChangeColorClientRpc();
             yield return new WaitForSeconds(0.5f);

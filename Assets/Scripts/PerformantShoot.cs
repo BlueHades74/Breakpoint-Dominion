@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -11,6 +12,7 @@ public class PerformantShoot : NetworkBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Transform startingPoint;
     [SerializeField] private float lifeTimer = 10f;
+    private bool canFire = true;
 
     private List<PerformantBullet> poolBullets = new List<PerformantBullet>();
     private List<PerformantBullet> activeBullets = new List<PerformantBullet>();
@@ -84,11 +86,16 @@ public class PerformantShoot : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        if (!canFire) return;
+
         // could just do transform.forward later, but this is
         // just in case I want to add more dynamic direction later
         Vector3 direction = transform.forward;
         // spawn for server to update
         SpawnBulletServerRpc(startingPoint.position, direction);
+
+        canFire = false;
+        StartCoroutine(BulletWaitTime());
     }
 
     private void SpawnBulletLocal(Vector3 startPoint, Vector3 direction)
@@ -143,5 +150,11 @@ public class PerformantShoot : NetworkBehaviour
     {
         // spawn bullet on clients
         SpawnBulletLocal(startPoint, direction);
+    }
+
+    private IEnumerator BulletWaitTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canFire = true;
     }
 }
