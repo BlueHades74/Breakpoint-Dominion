@@ -19,21 +19,37 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private bool isGrounded = true;
 
     private float maxHealth = 250f;
-    [SerializeField] private NetworkVariable<float> health;
+    private NetworkVariable<float> health = new();
     private bool canTakeDamage = true;
     [SerializeField] private float damageInvulTime = 1f;
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private HealthBar healthBarPersonal;
 
     public override void OnNetworkSpawn()
     {
+        health.OnValueChanged += UpdateHealthBars;
+
         if (IsServer) health.Value = maxHealth;
 
         if (IsOwner)
         {
             cam.SetActive(true);
             healthBar.UpdateHealthBar(health.Value, maxHealth);
-            // need to set personal health bar to inactive
+            healthBarPersonal.UpdateHealthBar(health.Value, maxHealth);
+            healthBar.gameObject.SetActive(false);
+            healthBarPersonal.IsPersonalCam();
         }
+
+        if (!IsOwner)
+        {
+            // turn off the personal health bar of others
+            healthBarPersonal.gameObject.SetActive(false);
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        health.OnValueChanged -= UpdateHealthBars;
     }
 
     private void OnEnable()
@@ -143,10 +159,20 @@ public class PlayerMovement : NetworkBehaviour
         {
             health.Value -= damageRecieved;
             Debug.Log($"Player health: {health.Value}");
-            healthBar.UpdateHealthBar(health.Value, maxHealth);
             StartCoroutine(DamageInvulnerability());
             canTakeDamage = false;
         }
+    }
+
+    // the two floats are necessary only because that's what's
+    //required of the delegate it's subscribed to
+    //i.e. don't remove the two floats
+    //the parameters need to be the same as the variable being modified
+    //health is a float, therefore the parameters are floats
+    private void UpdateHealthBars(float current, float previous)
+    {
+        healthBar.UpdateHealthBar(health.Value, maxHealth);
+        healthBarPersonal.UpdateHealthBar(health.Value, maxHealth);
     }
 
     private IEnumerator DamageInvulnerability()

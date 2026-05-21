@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
 
     private Camera cam;
 
+    private bool isPersonalCam = false;
+
     private void Start()
     {
         cam = Camera.main;
@@ -14,11 +16,17 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
+        if (isPersonalCam) return;
         transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
     }
 
     public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
         healthBarSprite.fillAmount = currentHealth / maxHealth;
+    }
+
+    public void IsPersonalCam()
+    {
+        isPersonalCam = true;
     }
 }
