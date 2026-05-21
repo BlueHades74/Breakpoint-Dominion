@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 339199006
+  GlobalObjectIdHash: 908084173
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1290,7 +1290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1851db16cbf813a468dc4dcf7d7450d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotatorMovement
-  ShowTopMostFoldoutHeaderGroup: 1
   rotateAmount: 10
 --- !u!114 &4645785722639800423
 MonoBehaviour:

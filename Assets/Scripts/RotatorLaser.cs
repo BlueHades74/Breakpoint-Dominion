@@ -2,7 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public class RotatorLaser : MonoBehaviour
+public class RotatorLaser : NetworkBehaviour
 {
     [SerializeField] private float defaultDistance = 100f;
     [SerializeField] private Transform firePoint;
@@ -10,7 +10,7 @@ public class RotatorLaser : MonoBehaviour
     [SerializeField] private Transform m_transform;
     private RaycastHit hit;
 
-    public static event Action<GameObject> onPlayerHit;
+    private float laserDamage = 25;
 
     private void Update()
     {
@@ -24,9 +24,13 @@ public class RotatorLaser : MonoBehaviour
             // draw to the hit point
             DrawRay(firePoint.position, hit.point);
 
+            if (!IsServer) return;
+
             if (hit.collider.CompareTag("Player"))
             {
-                onPlayerHit?.Invoke(hit.collider.gameObject);
+                // grab specific player's health
+                PlayerMovement health = hit.collider.GetComponent<PlayerMovement>();
+                health.TakeDamage(laserDamage);
             }
         }
         else

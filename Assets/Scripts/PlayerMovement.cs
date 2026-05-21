@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -17,20 +18,27 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 move;
     [SerializeField] private bool isGrounded = true;
 
-    [SerializeField] private NetworkVariable<int> health = new(250);
+    private float maxHealth = 250f;
+    [SerializeField] private NetworkVariable<float> health;
+    private bool canTakeDamage = true;
+    [SerializeField] private float damageInvulTime = 1f;
+    [SerializeField] private HealthBar healthBar;
 
     public override void OnNetworkSpawn()
     {
+        if (IsServer) health.Value = maxHealth;
+
         if (IsOwner)
         {
             cam.SetActive(true);
+            healthBar.UpdateHealthBar(health.Value, maxHealth);
+            // need to set personal health bar to inactive
         }
     }
 
     private void OnEnable()
     {
         PlayerGroundedCheck.onTouchingGround += GroundedTrue;
-        //RotatorLaser.onPlayerHit += 
     }
 
     private void OnDisable()
@@ -129,8 +137,21 @@ public class PlayerMovement : NetworkBehaviour
     }
     #endregion
 
-    private void TakeDamage(GameObject playerToDamage)
+    public void TakeDamage(float damageRecieved)
     {
+        if (canTakeDamage)
+        {
+            health.Value -= damageRecieved;
+            Debug.Log($"Player health: {health.Value}");
+            healthBar.UpdateHealthBar(health.Value, maxHealth);
+            StartCoroutine(DamageInvulnerability());
+            canTakeDamage = false;
+        }
+    }
 
+    private IEnumerator DamageInvulnerability()
+    {
+        yield return new WaitForSeconds(damageInvulTime);
+        canTakeDamage = true;
     }
 }
