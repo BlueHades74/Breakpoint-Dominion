@@ -17,6 +17,8 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 move;
     [SerializeField] private bool isGrounded = true;
 
+    [SerializeField] private NetworkVariable<int> health = new(250);
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -28,6 +30,7 @@ public class PlayerMovement : NetworkBehaviour
     private void OnEnable()
     {
         PlayerGroundedCheck.onTouchingGround += GroundedTrue;
+        //RotatorLaser.onPlayerHit += 
     }
 
     private void OnDisable()
@@ -89,6 +92,8 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    // Movement Code
+    #region
     public void Move(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
@@ -121,5 +126,11 @@ public class PlayerMovement : NetworkBehaviour
         if (!IsOwner) return;
 
         isGrounded = true;
+    }
+    #endregion
+
+    private void TakeDamage(GameObject playerToDamage)
+    {
+
     }
 }
