@@ -309,6 +309,7 @@ GameObject:
   - component: {fileID: 1910559505015556714}
   - component: {fileID: 8153599998063215482}
   - component: {fileID: 5328079572162636817}
+  - component: {fileID: -7924637269608300381}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -665,6 +666,20 @@ MonoBehaviour:
   startingPoint: {fileID: 8327915110575991502}
   lifeTimer: 5
   poolSize: 100
+--- !u!114 &-7924637269608300381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547216352733348984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8cd34a3899b474daa3697c9ab6bccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnPoint
+  ShowTopMostFoldoutHeaderGroup: 1
+  spawnPoints: []
 --- !u!1 &2715729167484150769
 GameObject:
   m_ObjectHideFlags: 0
